@@ -1,0 +1,200 @@
+syntax = "proto3";
+
+option go_package = "github.com/cilicivan96/eot_protos/usermanagement";
+
+service UserManagement {
+  // User methods
+  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Logout (LogoutRequest) returns (LogoutResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc UpdateUserInfo(UpdateUserInfoRequest) returns (UpdateUserInfoResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse);
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
+
+  // Project methods
+  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse);
+  rpc AddUserToProject(AddUserToProjectRequest) returns (AddUserToProjectResponse);
+  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse);
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse);
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse);
+  rpc GetUserProjects(GetUserProjectsRequest) returns (GetUserProjectsResponse);
+  rpc GetUserRoleOnProject(GetUserRoleOnProjectRequest) returns (GetUserRoleOnProjectResponse);
+  rpc CheckProjectToken(CheckProjectTokenRequest) returns (CheckProjectTokenResponse);
+}
+
+// The request message containing the username and password.
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+// The response message containing the JWT token.
+message LoginResponse {
+  string token = 1;
+}
+
+// The request message containing the username.
+message LogoutRequest {
+  string username = 1;
+}
+
+// The response message containing flag.
+message LogoutResponse {
+  bool isLoggedOut = 1;
+}
+
+// The request message containing JWT token.
+message ValidateTokenRequest {
+  string token = 1;
+}
+
+// The response message containing claims.
+message ValidateTokenResponse {
+  Claims claims = 1;
+}
+
+// The user message containing the user.
+message Claims {
+  bool authorized = 1;
+  string username = 2;
+  int64 expires = 3;
+}
+
+// The request message containing user's data required for registration 
+message RegisterRequest {
+  string username = 1;
+  string password = 2;
+  string firstName = 3;
+  string lastName = 4;
+  string email = 5;
+}
+
+// The response message containing flag that represents if is user registered 
+message RegisterResponse {
+  bool isRegistered = 1;
+}
+
+message UpdateUserInfoRequest {
+  string username = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+}
+
+message UpdateUserInfoResponse {
+  bool isUpdated = 1;
+}
+
+message DeleteUserRequest {
+  string username = 1;
+}
+
+message DeleteUserResponse {
+  bool isDeleted = 1;
+}
+
+message ChangePasswordRequest {
+  string username = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}
+
+message ChangePasswordResponse {
+  bool isChanged = 1;
+}
+
+message GetUserInfoRequest {
+  string username = 1;
+}
+
+message GetUserInfoResponse {
+  string username = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+}
+
+message CreateProjectRequest {
+  string name = 1;
+  string description = 2;
+  string company = 3;
+  string username = 4;
+}
+
+message CreateProjectResponse {
+  string projectId = 1;
+  string enToken = 2;
+}
+
+message AddUserToProjectRequest {
+  string projectId = 1;
+  string username = 2;
+  int32 roleId = 3;
+}
+
+message AddUserToProjectResponse {
+  bool isAdded = 1;
+}
+
+message UpdateProjectRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string company = 4;
+}
+
+message UpdateProjectResponse {
+  bool isUpdated = 1;
+}
+
+message DeleteProjectRequest {
+  string id = 1;
+}
+
+message DeleteProjectResponse {
+  bool isDeleted = 1;
+}
+
+message GetProjectRequest {
+  string id = 1;
+}
+
+message GetProjectResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string company = 4;
+  string enToken = 5;
+}
+
+message GetUserProjectsRequest {
+  string username = 1;
+}
+
+message GetUserProjectsResponse {
+  repeated ProjectSimple projects = 1;
+}
+
+message ProjectSimple {
+  string id = 1;
+  string name = 2;
+}
+
+message GetUserRoleOnProjectRequest {
+  string username = 1;
+  string projectId = 2;
+}
+
+message GetUserRoleOnProjectResponse {
+  int32 roleId = 1;
+}
+
+message CheckProjectTokenRequest {
+  string projectToken = 1;
+}
+
+message CheckProjectTokenResponse {
+  string projectId = 1;
+}
