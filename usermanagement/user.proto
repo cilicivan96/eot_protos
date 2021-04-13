@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option go_package = "ci.com/egde/eotaas/userms/usermanagement";
+option go_package = "github.com/cilicivan96/eot_protos/usermanagement";
 
 service UserManagement {
   // User methods
