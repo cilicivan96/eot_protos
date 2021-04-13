@@ -1,4 +1,4 @@
-module eot-protos
+module github.com/cilicivan96/eot_protos
 
 go 1.15
 
